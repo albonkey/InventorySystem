@@ -1,5 +1,4 @@
 import tkinter as tk
-#trying 1.0
 
 class User:
     def __init__(self, id, name, email, password, isAdmin ):
