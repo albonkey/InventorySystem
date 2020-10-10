@@ -1,5 +1,4 @@
 import tkinter as tk
-#trying 1.0
 
 class User:
     def __init__(self, id, name, email, password, isAdmin ):
@@ -52,18 +51,19 @@ class Invoice:
 
 #Implement UserList Class / Not that important
 
-#Implement a InvoiceList Class. 
+#Implement a InvoiceList Class.
 
 #Log In form / This we can do at the end if we get time.
 #New Client Form
 #New Product Form
 #New Invoice Form
 
-#Functions to implement all the form data.
+#Functions to implement all the  form data.
 
 
 #Create GUI
 
+#Helllo there
 
 class Application(tk.Frame):
     def __init__(self, master= None):
