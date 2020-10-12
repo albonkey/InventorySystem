@@ -60,7 +60,28 @@ class Invoice:
 #New Invoice Form
 
 #Functions to implement all the  form data.
+def hideSidebar():
+    frm_sidebarAdd.pack_forget()
+    frm_sidebarInvoice.pack_forget()
+    frm_sidebarProduct.pack_forget()
+    frm_sidebarClient.pack_forget()
 
+
+def loadNew():
+    hideSidebar()
+    frm_sidebarAdd.pack(fill=tk.BOTH, expand=True)
+
+def loadInvoice():
+    hideSidebar()
+    frm_sidebarInvoice.pack(fill=tk.BOTH, expand=True)
+
+def loadProduct():
+    hideSidebar()
+    frm_sidebarProduct.pack(fill=tk.BOTH, expand=True)
+
+def loadClient():
+    hideSidebar()
+    frm_sidebarClient.pack(fill=tk.BOTH, expand=True)
 
 #Create GUI
 color1 = "grey"
@@ -76,28 +97,28 @@ frm_header.pack(side=tk.TOP, fill=tk.BOTH)
 lbl_logo = tk.Label(master=frm_header, width=20, height=4, text="Inventory System", bg=color1)
 lbl_logo.pack(side=tk.LEFT)
 
-btn_add = tk.Button(master=frm_header, height=4, width=15, text="+", bg=color1)
+btn_add = tk.Button(master=frm_header, height=4, width=15, text="+", bg=color1, command=loadNew)
 btn_add.pack(side=tk.RIGHT)
 
-btn_invoice = tk.Button(master=frm_header, height=4, width=15, text="Invoice    ", bg=color1)
+btn_invoice = tk.Button(master=frm_header, height=4, width=15, text="Invoice", bg=color1, command=loadInvoice)
 btn_invoice.pack(side=tk.RIGHT)
 
-btn_products = tk.Button(master=frm_header, height=4, width=15, text="Products", bg=color1)
+btn_products = tk.Button(master=frm_header, height=4, width=15, text="Products", bg=color1, command=loadProduct)
 btn_products.pack(side=tk.RIGHT)
 
-btn_client = tk.Button(master=frm_header, height=4, width=15, text="Client", bg=color1)
+btn_client = tk.Button(master=frm_header, height=4, width=15, text="Client", bg=color1, command=loadClient)
 btn_client.pack(side=tk.RIGHT)
 
 #Main
 frm_main = tk.Frame(master=window, width=1000, height=600)
 frm_main.pack(fill=tk.BOTH, expand=True)
 
-#Sidebar
-frm_sidebar = tk.Frame(master=frm_main, width=200, height=600, bg=color2)
+#Sidebars
+frm_sidebar = tk.Frame(master=frm_main, width=200, bg=color2)
 frm_sidebar.pack(side=tk.LEFT, fill=tk.BOTH)
 
-frm_sidebarAdd = tk.Frame(master=frm_sidebar)
-frm_sidebarAdd.pack()
+#Sidebar add
+frm_sidebarAdd = tk.Frame(master=frm_sidebar, bg=color2)
 
 btn_sidebarAddProduct = tk.Button(master=frm_sidebarAdd, width=20, height=5, text="Add Product")
 btn_sidebarAddProduct.pack(fill=tk.X)
@@ -108,9 +129,33 @@ btn_sidebarAddClient.pack()
 btn_sidebarAddInvoice = tk.Button(master=frm_sidebarAdd, width=20, height=5, text="Add Invoice")
 btn_sidebarAddInvoice.pack()
 
+#Sidebar invoice
+frm_sidebarInvoice = tk.Frame(master=frm_sidebar, bg=color2)
+
+btn_sidebarInvoiceHistory = tk.Button(master=frm_sidebarInvoice, width=20, height=5, text="History")
+btn_sidebarInvoiceHistory.pack(fill=tk.X)
+
+btn_sidebarInvoiceUnpaid = tk.Button(master=frm_sidebarInvoice, width=20, height=5, text="Unpaid")
+btn_sidebarInvoiceUnpaid.pack(fill=tk.X)
+
+#Sidebar product
+frm_sidebarProduct = tk.Frame(master=frm_sidebar, bg=color2)
+
+btn_sidebarProductCategory1 = tk.Button(master=frm_sidebarProduct, width=20, height=5, text="Category 1")
+btn_sidebarProductCategory1.pack(fill=tk.X)
+
+btn_sidebarProductCategory2 = tk.Button(master=frm_sidebarProduct, width=20, height=5, text="Category 2")
+btn_sidebarProductCategory2.pack(fill=tk.X)
+
+#Sidebar Client
+frm_sidebarClient = tk.Frame(master=frm_sidebar, bg=color2)
+
+btn_sidebarClientList = tk.Button(master=frm_sidebarClient, width=20, height=5, text="Client List")
+btn_sidebarClientList.pack(fill=tk.X)
+
+
 #Footer
-frm_footer = tk.Frame(master=window, width=1000, height=50, bg="grey")
-frm_footer.pack(side=tk.BOTTOM, fill=tk.BOTH)
+
 
 #New Form
 frm_newProduct = tk.Frame(master=frm_main, pady=50)
