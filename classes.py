@@ -5,8 +5,6 @@ class User:
         self.email = email
         self.password = password
         self.isAdmin = isAdmin;
-        #possible client array for each user? 
-        self.clients = []
 
 class Client:
     def __init__(self, id, name, email, address):

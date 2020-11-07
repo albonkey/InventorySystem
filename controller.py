@@ -1,6 +1,7 @@
 import tkinter as tk
 from header import Header
 from sidebar import Sidebar
+from clientsView import ClientsView
 
 class UserInterface(tk.Frame):
     def __init__(self, parent, *args, **kwargs):
@@ -8,11 +9,17 @@ class UserInterface(tk.Frame):
         self.parent = parent
         self.header = Header(self)
         self.header.pack(side="top", fill = "y")
-        self.sidebar = Sidebar(self, "Products")
-        self.sidebar.pack(side="left")
+        self.view = ClientsView(self)
+        self.view.pack()
+        
 
 
-    def switchSidebar(self, sidebar):
-        self.sidebar.pack_forget()
-        self.sidebar = Sidebar(self, sidebar)
-        self.sidebar.pack(side="left", fill = "x")
+    #def switchSidebar(self, sidebar):
+    #    self.sidebar.pack_forget()
+    #    self.sidebar = Sidebar(self, sidebar)
+    #    self.sidebar.pack(side="left", fill = "x")
+
+    def switchView(self, view):
+        self.view.pack_forget()
+        self.view = ClientsView(self)
+        self.view.pack(side="center", fill= "both")
