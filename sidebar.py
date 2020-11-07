@@ -1,7 +1,7 @@
 import tkinter as tk
 
 invoices = ["Invoice History", "Unpaid Invoices", "Add Invoice"]
-clients = ["Category 1", "Category 2", "Category 3"]
+clients = ["Client List", "Add Client"]
 products = ["Products 1", "Products 2", "Products 3"]
 
 class Sidebar(tk.Frame):
@@ -18,7 +18,7 @@ class Sidebar(tk.Frame):
                 button.pack(fill="x")
         elif sidebar == "Clients":
             for a in clients:
-                button = tk.Button(master=self, width=20, height=5, text=a)
+                button = tk.Button(master=self, width=20, height=5, text=a, command=lambda a=a :self.parent.switchMain(a))
                 button.pack(fill="x")
         elif sidebar == "Products":
             for a in products:
