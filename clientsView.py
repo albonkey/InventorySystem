@@ -7,23 +7,26 @@ class ClientsView(tk.Frame):
         tk.Frame.__init__(self, parent, *args, **kwargs)
         self.parent = parent
         self.sidebar = Sidebar(self, "Clients")
-        self.sidebar.pack(side="left")
+        self.sidebar.pack(side="left", fill="y")
         self.main = tk.Frame(master=self)
-        self.clientList = tk.Frame(master=self.main, padx=30, pady=50)
+        self.clientList = tk.Frame(master=self.main, padx=30, pady=30)
         self.clientListInit()
-        self.clientAdd = tk.Frame(master=self.main, padx=30, pady=50)
+        self.clientAdd = tk.Frame(master=self.main, padx=30, pady=30)
         self.clientAddInit()
-
+        self.switchMain("Client List")
 
     def clientListInit(self):
-        rowcount = 0
+        rowcount = 1
         for client in Clients.clients:
-            rowcount += 1
             colcount = 0
             for attribute, value in client.__dict__.items():
+                if(rowcount == 1):
+                    self.label = tk.Label(master=self.clientList, text=attribute)
+                    self.label.grid(row=rowcount-1, column=colcount)
                 self.label = tk.Label(master=self.clientList, text=value)
-                self.label.grid(row=rowcount, column=colcount)
+                self.label.grid(row=rowcount+1, column=colcount)
                 colcount += 1
+            rowcount += 1
 
     def clientAddInit(self):
         lbl_name = tk.Label(master=self.clientAdd, text="Name")

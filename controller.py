@@ -3,6 +3,7 @@ from header import Header
 from sidebar import Sidebar
 from clientsView import ClientsView
 from invoicesView import InvoicesView
+from productsView import ProductsView
 
 class UserInterface(tk.Frame):
     def __init__(self, parent, *args, **kwargs):
@@ -21,10 +22,11 @@ class UserInterface(tk.Frame):
     #    self.sidebar.pack(side="left", fill = "x")
 
     def switchView(self, view):
-        print(view)
         self.view.pack_forget()
         if(view == "Clients"):
             self.view = ClientsView(self)
         elif(view == "Invoices"):
             self.view = InvoicesView(self)
+        elif(view == "Products"):
+            self.view = ProductsView(self)
         self.view.pack(fill= "both")

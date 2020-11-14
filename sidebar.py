@@ -1,8 +1,8 @@
 import tkinter as tk
 
-invoices = ["Invoice History", "Unpaid Invoices", "Add Invoice"]
+invoices = ["Invoice List", "Unpaid Invoices", "Add Invoice"]
 clients = ["Client List", "Add Client"]
-products = ["Products 1", "Products 2", "Products 3"]
+products = ["Product List", "Add Product"]
 
 class Sidebar(tk.Frame):
     def __init__(self, parent, sidebar, *args, **kwargs):

@@ -10,24 +10,28 @@ class InvoicesView(tk.Frame):
         tk.Frame.__init__(self, parent, *args, **kwargs)
         self.parent = parent
         self.sidebar = Sidebar(self, "Invoices")
-        self.sidebar.pack(side="left")
+        self.sidebar.pack(side="left", fill="y")
         self.main = tk.Frame(master=self)
-        self.invoicesList = tk.Frame(master=self.main, padx=30)
+        self.invoicesList = tk.Frame(master=self.main, padx=30, pady=30)
         self.invoicesListInit()
-        self.invoiceAdd = tk.Frame(master=self.main, padx=30)
+        self.invoiceAdd = tk.Frame(master=self.main, padx=30, pady=30)
         self.invoiceAddInit()
+        self.switchMain("Invoice List")
 
 
     def invoicesListInit(self):
-        print("Yes Sir")
-        rowcount = 0
+        rowcount = 1
         for invoice in Invoices.invoices:
-            rowcount += 1
             colcount = 0
             for attribute, value in invoice.__dict__.items():
+                if(rowcount == 1):
+                    self.label = tk.Label(master=self.invoicesList, text=attribute)
+                    self.label.grid(row=rowcount-1, column=colcount)
                 self.label = tk.Label(master=self.invoicesList, text=value)
                 self.label.grid(row=rowcount, column=colcount)
                 colcount += 1
+            rowcount += 1
+
 
     def invoiceAddInit(self):
         lbl_user = tk.Label(master=self.invoiceAdd, text="User")
@@ -47,7 +51,7 @@ class InvoicesView(tk.Frame):
         cbox_products = ttk.Combobox(self.invoiceAdd, width = 27, textvariable = a)
         cbox_products['values'] = (Clients.clients)
 
-        btn_submit = tk.Button(master=self.invoiceAdd, text="Add Client", height=3, width=10)
+        btn_submit = tk.Button(master=self.invoiceAdd, text="Add Invoice", height=3, width=10)
         lbl_user.pack()
         ent_user.pack()
         lbl_client.pack()
@@ -65,7 +69,7 @@ class InvoicesView(tk.Frame):
     def switchMain(self, name):
         self.invoicesList.pack_forget()
         self.invoiceAdd.pack_forget()
-        if(name == "Invoice History"):
+        if(name == "Invoice List"):
             self.invoicesList.pack()
         elif(name == "Add Invoice"):
             self.invoiceAdd.pack()
