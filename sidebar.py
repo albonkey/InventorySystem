@@ -14,7 +14,7 @@ class Sidebar(tk.Frame):
     def loadSidebar(self, sidebar):
         if sidebar == "Invoices":
             for a in invoices:
-                button = tk.Button(master=self, width=20, height=5, text=a)
+                button = tk.Button(master=self, width=20, height=5, text=a, command=lambda a=a :self.parent.switchMain(a))
                 button.pack(fill="x")
         elif sidebar == "Clients":
             for a in clients:

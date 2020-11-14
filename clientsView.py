@@ -9,9 +9,9 @@ class ClientsView(tk.Frame):
         self.sidebar = Sidebar(self, "Clients")
         self.sidebar.pack(side="left")
         self.main = tk.Frame(master=self)
-        self.clientList = tk.Frame(master=self.main, padx=30)
+        self.clientList = tk.Frame(master=self.main, padx=30, pady=50)
         self.clientListInit()
-        self.clientAdd = tk.Frame(master=self.main, padx=30)
+        self.clientAdd = tk.Frame(master=self.main, padx=30, pady=50)
         self.clientAddInit()
 
 
