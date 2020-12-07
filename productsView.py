@@ -1,8 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 from invoiceModule import InvoiceModule
-from products import Products
-#from products import Products
+from productModule import ProductModule
 from sidebar import Sidebar
 
 class ProductsView(tk.Frame):
@@ -23,7 +22,7 @@ class ProductsView(tk.Frame):
 
     def productsListInit(self):
         rowcount = 1
-        for product in Products.products:
+        for product in ProductModule.products:
             colcount = 0
             for attribute, value in product.__dict__.items():
                 if(rowcount == 1):

@@ -1,5 +1,5 @@
 import tkinter as tk
-from clients import Clients
+from clientModule import ClientModule
 from sidebar import Sidebar
 
 class ClientsView(tk.Frame):
@@ -19,7 +19,7 @@ class ClientsView(tk.Frame):
 
     def clientListInit(self):
         rowcount = 1
-        for client in Clients.clients:
+        for client in ClientModule.clients:
             colcount = 0
             for attribute, value in client.__dict__.items():
                 if(rowcount == 1):

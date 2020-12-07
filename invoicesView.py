@@ -1,8 +1,8 @@
 import tkinter as tk
 from tkinter import ttk
-from invoiceModule import InvoiceModule
-from clients import Clients
-from products import Products
+from invoiceModule import invoiceModule
+from clientModule import ClientModule
+from productModule import ProductModule
 from sidebar import Sidebar
 
 class InvoicesView(tk.Frame):
@@ -26,7 +26,7 @@ class InvoicesView(tk.Frame):
 
     def invoicesListInit(self):
         rowcount = 1
-        for invoice in InvoiceModule.invoices:
+        for invoice in invoiceModule.getInvoices():
             colcount = 0
             for attribute, value in invoice.__dict__.items():
                 if(rowcount == 1):
@@ -41,7 +41,7 @@ class InvoicesView(tk.Frame):
     def invoiceAddInit(self):
 
         dropdownClients = []
-        for client in Clients.clients:
+        for client in ClientModule.clients:
             dropdownClients.append(client.name)
         tkvar_client = tk.StringVar(master=self.invoiceAdd)
         lbl_client = tk.Label(master=self.invoiceAdd, text="Client")
@@ -54,7 +54,9 @@ class InvoicesView(tk.Frame):
         ent_description = tk.Entry(master=self.invoiceAdd)
         lbl_dueDate = tk.Label(master=self.invoiceAdd, text="Due Date")
         ent_dueDate = tk.Entry(master=self.invoiceAdd)
-        btn_submit = tk.Button(master=self.invoiceAdd, text="Create Invoice", height=3, width=10)
+        btn_submit = tk.Button(master=self.invoiceAdd, text="Create Invoice", height=3, width=10,
+            command= lambda: self.createInvoice(tkvar_client.get(), ent_title.get(), ent_description.get(), ent_dueDate.get())
+        )
 
         lbl_client.pack(padx=5, pady=5, fill="x")
         opt_client.pack(padx=5, pady=5,fill="x")
@@ -68,7 +70,7 @@ class InvoicesView(tk.Frame):
 
     def invoiceProductList(self):
         dropdownProducts = []
-        for product in Products.products:
+        for product in ProductModule.products:
             dropdownProducts.append(product.name)
         lbl_products = tk.Label(master=self.productList, text="Products")
         tkvar_product = tk.StringVar(master=self.productList)
