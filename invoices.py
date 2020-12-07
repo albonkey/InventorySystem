@@ -6,7 +6,7 @@ class Invoice():
         Invoice(1, "Carl", "Alejandro", "Socks", "Bought 1 pair of socks. ",
             [Product(1, "Socks", "Put them on your feet", "Clothes", 50, 10)],
             "01/01/2020")
-    ];
+    ]
     #id_counter:
     #Create Invoice (id, user, client, title, description, products [], dueDate){}
 
