@@ -63,6 +63,8 @@ class ProductsView(tk.Frame):
 
     def createProduct(self, id, name, description, category, cost, qty):
         productModule.createProduct(id, name, description, category, cost, qty)
+        self.productsListInit()
+        self.switchMain("Product List")
 
     def switchMain(self, name):
         self.productsList.pack_forget()

@@ -95,6 +95,8 @@ class InvoicesView(tk.Frame):
 
     def createInvoice(self, client, title, description, dueDate):
         invoiceModule.createInvoice(1, client, title, description, dueDate)
+        self.invoicesListInit()
+        self.switchMain("Invoice List")
 
 
     def switchMain(self, name):
