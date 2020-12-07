@@ -1,7 +1,7 @@
 from classes import Invoice
 from classes import Product
 
-class Invoices():
+class Invoice():
     invoices = [
         Invoice(1, "Carl", "Alejandro", "Socks", "Bought 1 pair of socks. ",
             [Product(1, "Socks", "Put them on your feet", "Clothes", 50, 10)],
@@ -9,6 +9,7 @@ class Invoices():
     ];
     #id_counter:
     #Create Invoice (id, user, client, title, description, products [], dueDate){}
+
     #update invoice(invoice id)
     #remove invoice(invoice id)
 
