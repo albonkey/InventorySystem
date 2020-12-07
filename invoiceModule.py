@@ -8,12 +8,20 @@ class InvoiceModule():
             ]
 
     #id_counter:
+    def getInvoices(self):
+        return self.invoices
+
     #Create Invoice (id, user, client, title, description, products [], dueDate){}
     def createInvoice(self, user_id, client_id, title, description, dueDate):
         self.invoices.append(Invoice(1, user_id, client_id, title, description, dueDate))
 
-    def getInvoices(self):
-        return self.invoices
+
+
+    def updateInvoice(self, id, user_id, client_id, title, description, dueDate):
+        return null
+
+    def removeInvoice(self, id):
+        return null
     #update invoice(invoice id)
     #remove invoice(invoice id)
 
