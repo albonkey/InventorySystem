@@ -2,7 +2,7 @@ import tkinter as tk
 from tkinter import ttk
 from invoices import Invoices
 from clients import Clients
-#from products import Products
+from products import Products
 from sidebar import Sidebar
 
 class InvoicesView(tk.Frame):
