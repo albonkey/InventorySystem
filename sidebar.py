@@ -1,6 +1,6 @@
 import tkinter as tk
 
-invoices = ["Invoice List", "Unpaid Invoices", "Add Invoice"]
+invoices = ["Invoice List", "Create Invoice"]
 clients = ["Client List", "Add Client"]
 products = ["Product List", "Add Product"]
 

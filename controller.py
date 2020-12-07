@@ -9,7 +9,7 @@ class UserInterface(tk.Frame):
     def __init__(self, parent, *args, **kwargs):
         tk.Frame.__init__(self, parent, *args, **kwargs)
         self.parent = parent
-        self.header = Header(self, bg= 'grey')
+        self.header = Header(self)
         self.header.pack(side="top", fill="both")
         self.view = ClientsView(self)
         self.view.pack(fill="both")

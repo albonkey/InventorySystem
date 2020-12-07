@@ -6,7 +6,7 @@ class Header(tk.Frame):
         tk.Frame.__init__(self, parent, *args, **kwargs)
         self.parent = parent
         fontStyle = tkFont.Font(family="Lucida Grande", size=20)
-        lbl_logo = tk.Label(master=self, text="Inventory System", bg="grey", activebackground="grey", padx=15, font = fontStyle)
+        lbl_logo = tk.Label(master=self, text="Inventory System", padx=15, font = fontStyle)
         lbl_logo.pack(side=tk.LEFT, fill="y")
         self.addButton('Invoices')
         self.addButton('Products')

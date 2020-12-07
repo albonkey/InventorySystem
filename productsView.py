@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
-from invoices import Invoices
+from invoiceModule import InvoiceModule
 from products import Products
 #from products import Products
 from sidebar import Sidebar
@@ -9,6 +9,8 @@ class ProductsView(tk.Frame):
     def __init__(self, parent, *args, **kwargs):
         tk.Frame.__init__(self, parent, *args, **kwargs)
         self.parent = parent
+        self.heading = tk.Label(self, text="Products", background="lightgrey",pady="5")
+        self.heading.pack(side="top", fill="x")
         self.sidebar = Sidebar(self, "Invoices")
         self.sidebar.pack(side="left", fill="y")
         self.main = tk.Frame(master=self)

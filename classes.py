@@ -17,11 +17,11 @@ class Client:
 
         #Function to calculate how much they owe
         def calcOwed():
-            total = 0 
+            total = 0
             for invoice in self.invoices:
                 if invoice.isPaid:
                     total += invoice.totalCost
-        
+
         #Function to see Invoices that is not paid
         def notPaidYet():
             for invoice in self.invoices:
@@ -34,8 +34,8 @@ class Client:
                 counter = 0
                 if not invoice.isPaid:
                     print(str(counter + 1) + "Invoices paid: " + invoice)
-   
-    
+
+
 
 class Product:
     def __init__(self, id, name, description, category, cost, inventory):
@@ -47,30 +47,23 @@ class Product:
         self.inventory = inventory
 
 class Invoice:
-    def __init__(self, id, user, client, title, description, products, dueDate):
+    def __init__(self, id, user, client, title, description, dueDate):
         self.id = id
         self.user = user
         self.client = client
         self.title = title
         self.description = description
-        self.products = products
         self.dueDate = dueDate
         self.date = "01/01/2020"
         self.isPaid = False
-        self.calculateCost = 0 
-        self.totalCost = calculateCost()
         
-        self.totalItems = len(products)
+
         #Function to check total cost of products
-        def calculateCost(product):
-            total = 0 
-            for product in self.products:
-               total += product.cost
-            return total
+
 
         #Function to pay it.
-        def toPay(): 
-            self.isPaid = True #Update database to be paid 
+        def toPay():
+            self.isPaid = True #Update database to be paid
 
 
 products = []

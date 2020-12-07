@@ -6,6 +6,8 @@ class ClientsView(tk.Frame):
     def __init__(self, parent, *args, **kwargs):
         tk.Frame.__init__(self, parent, *args, **kwargs)
         self.parent = parent
+        self.heading = tk.Label(self, text="Clients", background="lightgrey",pady="5")
+        self.heading.pack(side="top", fill="x")
         self.sidebar = Sidebar(self, "Clients")
         self.sidebar.pack(side="left", fill="y")
         self.main = tk.Frame(master=self)
