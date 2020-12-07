@@ -10,7 +10,7 @@ class ProductsView(tk.Frame):
         self.parent = parent
         self.heading = tk.Label(self, text="Products", background="lightgrey",pady="5")
         self.heading.pack(side="top", fill="x")
-        self.sidebar = Sidebar(self, "Invoices")
+        self.sidebar = Sidebar(self, "Products")
         self.sidebar.pack(side="left", fill="y")
         self.main = tk.Frame(master=self)
         self.productsList = tk.Frame(master=self.main, padx=30, pady=30)
@@ -61,6 +61,8 @@ class ProductsView(tk.Frame):
         btn_submit.pack()
 
 
+    def createProduct(self, id, name, description, category, cost, qty):
+        productModule.createProduct(id, name, description, category, cost, qty)
 
     def switchMain(self, name):
         self.productsList.pack_forget()

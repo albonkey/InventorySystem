@@ -8,6 +8,8 @@ class ClientModule():
             Client(3, "nicol", "nicol@gmail.com", "Los Angeles")
         ]
 
+    #Connect database here. And make the functions update the database
+
     #Create Clients (id, name, email, address)
     def createClient(self,id, name, email, address):
         self.clients.append(Client(id, name, email, address))
@@ -16,7 +18,11 @@ class ClientModule():
     def getClients(self):
         return self.clients
 
-    #update clients(client id)
-    #remove clients(client id)
+    def updateClient(self, id, name, email, address):
+        return null
+
+    def removieClient(self, client_id):
+        return nulll
+
 
 clientModule = ClientModule()

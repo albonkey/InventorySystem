@@ -37,7 +37,9 @@ class ClientsView(tk.Frame):
         ent_email = tk.Entry(master=self.clientAdd)
         lbl_address = tk.Label(master=self.clientAdd, text="Address")
         ent_address = tk.Entry(master=self.clientAdd)
-        btn_submit = tk.Button(master=self.clientAdd, text="Add Client", height=3, width=10)
+        btn_submit = tk.Button(master=self.clientAdd, text="Add Client", height=3, width=10,
+            command= lambda: self.createClient(ent_name.get(), ent_email.get(), ent_address.get())
+        )
         lbl_name.pack()
         ent_name.pack()
         lbl_email.pack()
@@ -47,6 +49,10 @@ class ClientsView(tk.Frame):
         btn_submit.pack()
 
 
+    def createClient(self, name, email, address):
+        clientModule.createClient(1, name, email, address)
+        self.clientListInit()
+        self.switchMain("Client List")
 
     def switchMain(self, name):
         self.clientList.pack_forget()

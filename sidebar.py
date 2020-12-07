@@ -22,5 +22,5 @@ class Sidebar(tk.Frame):
                 button.pack(fill="x")
         elif sidebar == "Products":
             for a in products:
-                button = tk.Button(master=self, width=20, height=5, text=a)
+                button = tk.Button(master=self, width=20, height=5, text=a, command=lambda a=a :self.parent.switchMain(a))
                 button.pack(fill="x")
