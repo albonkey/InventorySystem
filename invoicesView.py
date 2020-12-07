@@ -1,8 +1,8 @@
 import tkinter as tk
 from tkinter import ttk
 from invoiceModule import invoiceModule
-from clientModule import ClientModule
-from productModule import ProductModule
+from clientModule import clientModule
+from productModule import productModule
 from sidebar import Sidebar
 
 class InvoicesView(tk.Frame):
@@ -41,7 +41,7 @@ class InvoicesView(tk.Frame):
     def invoiceAddInit(self):
 
         dropdownClients = []
-        for client in ClientModule.clients:
+        for client in clientModule.getClients():
             dropdownClients.append(client.name)
         tkvar_client = tk.StringVar(master=self.invoiceAdd)
         lbl_client = tk.Label(master=self.invoiceAdd, text="Client")
@@ -70,7 +70,7 @@ class InvoicesView(tk.Frame):
 
     def invoiceProductList(self):
         dropdownProducts = []
-        for product in ProductModule.products:
+        for product in productModule.getProducts():
             dropdownProducts.append(product.name)
         lbl_products = tk.Label(master=self.productList, text="Products")
         tkvar_product = tk.StringVar(master=self.productList)
