@@ -21,7 +21,6 @@ class ClientsView(tk.Frame):
 
 
     def clientListInit(self):
-        print(clientModule.get_all_clients())
         rowcount = 1
         for client in clientModule.get_all_clients():
             print(client["Customer"])
@@ -31,8 +30,10 @@ class ClientsView(tk.Frame):
                 if (rowcount == 1):
                     self.label = tk.Label(master=self.clientList, text=key)
                     self.label.grid(row=rowcount - 1, column=colcount)
-                self.label = tk.Label(master=self.clientList, text=client["Customer"][key], width=25)
-                self.label.grid(row=rowcount + 1, column=colcount)
+                self.label = tk.Label(master=self.clientList, text=client["Customer"][key])
+                if(rowcount % 2):
+                    self.label["background"] = "lightgrey"
+                self.label.grid(row=rowcount + 1, column=colcount, ipady=5, ipadx=10)
                 colcount += 1
             rowcount += 1
 
@@ -55,7 +56,6 @@ class ClientsView(tk.Frame):
         btn_submit.pack()
 
     def createClient(self, name, email, address):
-        # Added uuid to create a unique ID in HEX
 
         clientModule.createClient( name, email, address)
         self.clientListInit()

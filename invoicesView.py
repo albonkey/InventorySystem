@@ -41,8 +41,9 @@ class InvoicesView(tk.Frame):
     def invoiceAddInit(self):
 
         dropdownClients = []
-        for client in clientModule.getClients():
-            dropdownClients.append(client.name)
+        for clientX in clientModule.get_all_clients():
+            client = clientX["Customer"]
+            dropdownClients.append(client["CustomerName"])
         tkvar_client = tk.StringVar(master=self.invoiceAdd)
         lbl_client = tk.Label(master=self.invoiceAdd, text="Client")
         opt_client = ttk.OptionMenu(self.invoiceAdd, tkvar_client, dropdownClients[1], *dropdownClients)
