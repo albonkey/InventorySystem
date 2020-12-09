@@ -14,25 +14,28 @@ class ClientsView(tk.Frame):
         self.sidebar.pack(side="left", fill="y")
         self.main = tk.Frame(master=self)
         self.clientList = tk.Frame(master=self.main, padx=30, pady=30)
-        #self.clientListInit()
+        self.clientListInit()
         self.clientAdd = tk.Frame(master=self.main, padx=30, pady=30)
         self.clientAddInit()
         self.switchMain("Client List")
-    """
+
+
     def clientListInit(self):
+        print(clientModule.get_all_clients())
         rowcount = 1
-        
-     for client in clientModule.getClients():
+        for client in clientModule.get_all_clients():
+            print(client["Customer"])
             colcount = 0
-            for attribute, value in client.__dict__.items():
+
+            for key in client["Customer"]:
                 if (rowcount == 1):
-                    self.label = tk.Label(master=self.clientList, text=attribute)
+                    self.label = tk.Label(master=self.clientList, text=key)
                     self.label.grid(row=rowcount - 1, column=colcount)
-                self.label = tk.Label(master=self.clientList, text=value)
+                self.label = tk.Label(master=self.clientList, text=client["Customer"][key], width=25)
                 self.label.grid(row=rowcount + 1, column=colcount)
                 colcount += 1
             rowcount += 1
-        """
+
     def clientAddInit(self):
         lbl_name = tk.Label(master=self.clientAdd, text="Name")
         ent_name = tk.Entry(master=self.clientAdd)
@@ -53,9 +56,9 @@ class ClientsView(tk.Frame):
 
     def createClient(self, name, email, address):
         # Added uuid to create a unique ID in HEX
-        client_id = uuid.uuid1()
-        clientModule.createClient(client_id.hex, name, email, address)
-        #self.clientListInit() temporarly disabled
+
+        clientModule.createClient( name, email, address)
+        self.clientListInit()
         self.switchMain("Client List")
 
     def switchMain(self, name):

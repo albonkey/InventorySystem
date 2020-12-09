@@ -1,5 +1,6 @@
 from classes import Client
 import pymongo
+import uuid
 from pymongo import MongoClient
 
 
@@ -11,17 +12,19 @@ class ClientModule:
         self.client = pymongo.MongoClient(self.connection_string)
         self.db = self.client.inventory_MS
         self.collection = self.db.customers
+        
 
     def get_all_clients(self):
         all_clients = self.collection.find({})
         return all_clients
     # Create Clients (id, name, email, address)
-    def createClient(self, id, name, email, address):
+    def createClient(self, name, email, address):
         """ This functions creates a customer object in the mondoDB database using pymongo."""
         # Client document to be inserted into the DB
+        client_id = uuid.uuid1()
         document = {
             "Customer": {
-                "CustomerID": id,
+                "CustomerID": client_id.hex,
                 "CustomerName": name,
                 "Email": email,
                 "Address": address,
@@ -29,6 +32,7 @@ class ClientModule:
         }
         # Creating a new Client document in the DB
         self.collection.insert_one(document)
+        print("Client Created")
 
     def getClient(self, email):
         """ This function returns a customer dictionary object from the DB using their email"""
