@@ -24,6 +24,18 @@ class InvoiceModule:
         invoice = self.collection.find(query)
         return invoice
 
+    def getUnpaidInvoices(self):
+        """This function returns all UNPAID invoices from the DB"""
+        query = {"IsPaid": 0}
+        invoices = self.collection.find(query)
+        return invoices
+
+    def getPaidInvoices(self):
+        """This function returns all PAID invoices from the DB"""
+        query = {"IsPaid": 0}
+        invoices = self.collection.find(query)
+        return invoices
+
     def createInvoice(self, client_id, title, description, dueDate, cost):
         """This function creates a new invoices object """
         invoice = {
