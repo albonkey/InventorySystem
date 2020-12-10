@@ -15,12 +15,11 @@ class ClientsView(tk.Frame):
         self.sidebar.pack(side="left", fill="y")
         self.main = tk.Frame(master=self)
 
-        self.clientList = tk.Frame(master=self.main, padx=30, pady=30)
+        self.clientList = createListFrame(self.main, clientModule.get_all_clients(),"No Clients", "See Invoices", self.seeClientInvoices)
 
         self.clientAdd = tk.Frame(master=self.main, padx=30, pady=100)
         self.clientAddInit()
 
-        self.clientInvoicesList = createListFrame(self.main, clientModule.get_all_clients(), "See Invoices", self.seeClientInvoices)
 
         self.switchMain("Client List")
 

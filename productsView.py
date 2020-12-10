@@ -14,7 +14,7 @@ class ProductsView(tk.Frame):
         self.sidebar = Sidebar(self, "Products")
         self.sidebar.pack(side="left", fill="y")
         self.main = tk.Frame(master=self)
-        self.productsList = createListFrame(self.main, productModule.getProducts(), "Change Product", self.changeProduct )
+        self.productsList = createListFrame(self.main, productModule.getProducts(),"No Products", "Change Product", self.changeProduct )
 
         self.productAdd = tk.Frame(master=self.main, padx=30, pady=100)
         self.productAddInit()

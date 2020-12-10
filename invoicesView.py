@@ -15,17 +15,22 @@ class InvoicesView(tk.Frame):
         self.sidebar = Sidebar(self, "Invoices")
         self.sidebar.pack(side="left", fill="y")
         self.main = tk.Frame(master=self)
-        self.invoicesList = createListFrame(self.main, invoiceModule.getAllInvoices(), "Pay Invoice", self.payInvoice )
+        self.invoicesList = tk.Frame()
+        self.updateList("unpaid")
 
         self.invoiceAdd = tk.Frame(master=self.main, padx=30, pady=30)
         self.invoiceAddInit()
         self.products = []
         self.productList = tk.Frame(master=self.main, padx=30, pady=30)
         self.invoiceProductList()
-        self.switchMain("Invoice List")
+        self.switchMain("Current Invoices")
 
     #Creating a view of the list of invoices
-
+    def updateList(self, type):
+        if(type == "paid"):
+            self.invoicesList = createListFrame(self.main, invoiceModule.getPaidInvoices(),"Currently no paid invoices.", "Delete Invoice", self.payInvoice )
+        elif(type == "unpaid"):
+            self.invoicesList = createListFrame(self.main, invoiceModule.getUnpaidInvoices(), "Currently no unpaid invoices.", "Pay Invoice", self.payInvoice )
     #creating a view of the form for creating invoices
     def invoiceAddInit(self):
         dropdownClients = []
@@ -96,7 +101,11 @@ class InvoicesView(tk.Frame):
         self.invoicesList.pack_forget()
         self.invoiceAdd.pack_forget()
         self.productList.pack_forget()
-        if(name == "Invoice List"):
+        if(name == "Current Invoices"):
+            self.updateList("unpaid")
+            self.invoicesList.pack()
+        elif(name == "Invoice History"):
+            self.updateList("paid")
             self.invoicesList.pack()
         elif(name == "Create Invoice"):
             self.invoiceAdd.pack(fill="both", side="left", expand=True)
