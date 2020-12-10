@@ -2,6 +2,7 @@ import tkinter as tk
 import uuid
 from clientModule import clientModule
 from sidebar import Sidebar
+from createListFrame import createListFrame
 
 
 class ClientsView(tk.Frame):
@@ -19,27 +20,11 @@ class ClientsView(tk.Frame):
         self.clientAdd = tk.Frame(master=self.main, padx=30, pady=100)
         self.clientAddInit()
 
-        self.clientInvoicesList = createListFrame(self.main, invoiceModule.getAllInvoices(), "See Invoices", lambda: ())
+        self.clientInvoicesList = createListFrame(self.main, clientModule.get_all_clients(), "See Invoices", self.seeClientInvoices)
 
         self.switchMain("Client List")
 
     #Creating a view of the list of clients
-    def clientListInit(self):
-        rowcount = 1
-        for client in clientModule.get_all_clients():
-            colcount = 0
-            for key in client:
-                if (rowcount == 1):
-                    self.label = tk.Label(master=self.clientList, text=key)
-                    self.label.grid(row=rowcount - 1, column=colcount, ipady=10,ipadx=3, sticky="NESW")
-                self.label = tk.Label(master=self.clientList, text=client[key])
-                if(rowcount % 2):
-                    self.label["background"] = "lightgrey"
-                self.label.grid(row=rowcount, column=colcount, ipady=10,ipadx=3, sticky="NESW")
-                colcount += 1
-            self.button = tk.Button(master=self.clientList, text="See Invoices")
-            self.button.grid(row=rowcount, column=colcount, ipady=10,ipadx=3, sticky="NESW")
-            rowcount += 1
 
     #creating a view of the form for adding clients
     def clientAddInit(self):
@@ -78,7 +63,6 @@ class ClientsView(tk.Frame):
         self.clientList.pack_forget()
         self.clientAdd.pack_forget()
         if name == "Client List":
-            self.clientListInit()
             self.clientList.pack()
         elif name == "Add Client":
             self.clientAdd.pack()
