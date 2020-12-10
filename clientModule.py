@@ -30,7 +30,9 @@ class ClientModule:
             "Address": address,
         }
         # Creating a new Client document in the DB
-        self.collection.insert_one(customer)
+        _id = self.collection.insert_one(customer)
+        print("--------")
+        print(_id.inserted_id)
 
     def getClient(self, email):
         """ This function returns a customer dictionary object from the DB using their email"""

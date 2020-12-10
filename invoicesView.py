@@ -65,11 +65,11 @@ class InvoicesView(tk.Frame):
     #Creating view for adding products to the invoice
     def invoiceProductList(self):
         dropdownProducts = []
-        for product in productModule.getProducts():
-            dropdownProducts.append(product.name)
+        for product in productModule.getAllProducts():
+            dropdownProducts.append(product["ProductName"])
         lbl_products = tk.Label(master=self.productList, text="Products")
         tkvar_product = tk.StringVar(master=self.productList)
-        opt_products = ttk.OptionMenu(self.productList, tkvar_product, dropdownProducts[1], *dropdownProducts)
+        opt_products = ttk.OptionMenu(self.productList, tkvar_product, dropdownProducts[-1], *dropdownProducts)
         opt_products["width"] = 18
 
         btn_addProduct = tk.Button(master=self.productList, text="Add Product",padx=5, pady=3, command= lambda: self.addProduct(tkvar_product.get()))
@@ -91,8 +91,9 @@ class InvoicesView(tk.Frame):
         print("Invoice Paid: " + str(id))
         invoiceModule.payInvoice(id)
 
-    def createInvoice(self, client, title, description, dueDate):
-        invoiceModule.createInvoice(1, client, title, description, dueDate)
+    def createInvoice(self, client, title, description, dueDate, list):
+        invoiceModule.createInvoice(1, client, title, description, dueDate, list)
+
         self.invoicesListInit()
         self.switchMain("Invoice List")
 
