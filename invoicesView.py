@@ -4,6 +4,7 @@ from invoiceModule import invoiceModule
 from clientModule import clientModule
 from productModule import productModule
 from sidebar import Sidebar
+from createListFrame import createListFrame
 
 class InvoicesView(tk.Frame):
     def __init__(self, parent, *args, **kwargs):
@@ -14,8 +15,8 @@ class InvoicesView(tk.Frame):
         self.sidebar = Sidebar(self, "Invoices")
         self.sidebar.pack(side="left", fill="y")
         self.main = tk.Frame(master=self)
-        self.invoicesList = tk.Frame(master=self.main, padx=30, pady=30)
-        self.invoicesListInit()
+        self.invoicesList = createListFrame(self.main, invoiceModule.getInvoices(), "Pay Invoice", self.payInvoice )
+
         self.invoiceAdd = tk.Frame(master=self.main, padx=30, pady=30)
         self.invoiceAddInit()
         self.products = []
@@ -23,27 +24,14 @@ class InvoicesView(tk.Frame):
         self.invoiceProductList()
         self.switchMain("Invoice List")
 
+    #Creating a view of the list of invoices
 
-    def invoicesListInit(self):
-        rowcount = 1
-        for invoice in invoiceModule.getInvoices():
-            colcount = 0
-            for attribute, value in invoice.__dict__.items():
-                if(rowcount == 1):
-                    self.label = tk.Label(master=self.invoicesList, text=attribute)
-                    self.label.grid(row=rowcount-1, column=colcount)
-                self.label = tk.Label(master=self.invoicesList, text=value)
-                self.label.grid(row=rowcount, column=colcount)
-                colcount += 1
-            rowcount += 1
-
-
+    #creating a view of the form for creating invoices
     def invoiceAddInit(self):
-
         dropdownClients = []
-        for clientX in clientModule.get_all_clients():
-            client = clientX["Customer"]
+        for client in clientModule.get_all_clients():
             dropdownClients.append(client["CustomerName"])
+
         tkvar_client = tk.StringVar(master=self.invoiceAdd)
         lbl_client = tk.Label(master=self.invoiceAdd, text="Client")
         opt_client = ttk.OptionMenu(self.invoiceAdd, tkvar_client, dropdownClients[1], *dropdownClients)
@@ -69,6 +57,7 @@ class InvoicesView(tk.Frame):
         ent_dueDate.pack(padx=5, pady=5, fill="x")
         btn_submit.pack(padx=5, pady=5, fill="x")
 
+    #Creating view for adding products to the invoice
     def invoiceProductList(self):
         dropdownProducts = []
         for product in productModule.getProducts():
@@ -93,6 +82,8 @@ class InvoicesView(tk.Frame):
 
         self.switchMain("Create Invoice")
 
+    def payInvoice(self, id):
+        print("Invoice Paid: " + str(id))
 
     def createInvoice(self, client, title, description, dueDate):
         invoiceModule.createInvoice(1, client, title, description, dueDate)

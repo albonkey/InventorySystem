@@ -21,7 +21,7 @@ class InvoiceModule():
         return null
 
     def removeInvoice(self, id):
-        return null
+        return null 
     #update invoice(invoice id)
     #remove invoice(invoice id)
 

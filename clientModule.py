@@ -8,7 +8,7 @@ class ClientModule:
     def __init__(self):
         # database connection
         self.connection_string = "mongodb+srv://ultra:dundun428@ims.bnlzj.mongodb.net/inventory_MS?retryWrites=true&w" \
-                                 "=majority "
+                                 "=majority"
         self.client = pymongo.MongoClient(self.connection_string)
         self.db = self.client.inventory_MS
         self.collection = self.db.customers
@@ -22,17 +22,13 @@ class ClientModule:
         #This functions creates a customer object in the mondoDB database using pymongo.
         # Client document to be inserted into the DB
         client_id = uuid.uuid1()
-        document = {
-            "Customer": {
-                "CustomerID": client_id.hex,
-                "CustomerName": name,
-                "Email": email,
-                "Address": address,
-            }
+        customer = {
+            "CustomerName": name,
+            "Email": email,
+            "Address": address,
         }
         # Creating a new Client document in the DB
-        self.collection.insert_one(document)
-        print("Client Created")
+        self.collection.insert_one(customer)
 
     def getClient(self, email):
         """ This function returns a customer dictionary object from the DB using their email"""

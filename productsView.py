@@ -3,6 +3,7 @@ from tkinter import ttk
 from invoiceModule import invoiceModule
 from productModule import productModule
 from sidebar import Sidebar
+from createListFrame import createListFrame
 
 class ProductsView(tk.Frame):
     def __init__(self, parent, *args, **kwargs):
@@ -13,25 +14,11 @@ class ProductsView(tk.Frame):
         self.sidebar = Sidebar(self, "Products")
         self.sidebar.pack(side="left", fill="y")
         self.main = tk.Frame(master=self)
-        self.productsList = tk.Frame(master=self.main, padx=30, pady=30)
-        self.productsListInit()
-        self.productAdd = tk.Frame(master=self.main, padx=30, pady=30)
+        self.productsList = createListFrame(self.main, productModule.getProducts(), "Change Product", self.changeProduct )
+
+        self.productAdd = tk.Frame(master=self.main, padx=30, pady=100)
         self.productAddInit()
         self.switchMain("Product List")
-
-
-    def productsListInit(self):
-        rowcount = 1
-        for product in productModule.getProducts():
-            colcount = 0
-            for attribute, value in product.__dict__.items():
-                if(rowcount == 1):
-                    self.label = tk.Label(master=self.productsList, text=attribute)
-                    self.label.grid(row=rowcount-1, column=colcount)
-                self.label = tk.Label(master=self.productsList, text=value)
-                self.label.grid(row=rowcount, column=colcount)
-                colcount += 1
-            rowcount += 1
 
 
     def productAddInit(self):
@@ -60,6 +47,8 @@ class ProductsView(tk.Frame):
         ent_inventory.pack()
         btn_submit.pack()
 
+    def changeProduct(self, id):
+        print("product Changed: " + str(id))
 
     def createProduct(self, id, name, description, category, cost, qty):
         productModule.createProduct(id, name, description, category, cost, qty)

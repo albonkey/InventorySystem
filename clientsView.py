@@ -13,30 +13,34 @@ class ClientsView(tk.Frame):
         self.sidebar = Sidebar(self, "Clients")
         self.sidebar.pack(side="left", fill="y")
         self.main = tk.Frame(master=self)
+
         self.clientList = tk.Frame(master=self.main, padx=30, pady=30)
-        self.clientListInit()
-        self.clientAdd = tk.Frame(master=self.main, padx=30, pady=30)
-        self.clientAddInit()
+
+        self.clientAdd = tk.Frame(master=self.main, padx=30, pady=100)
+
+        self.clientInvoicesList = tk.Frame(master=self.main, padx=30, pady=30)
+
         self.switchMain("Client List")
 
-
+    #Creating a view of the list of clients
     def clientListInit(self):
         rowcount = 1
         for client in clientModule.get_all_clients():
-            print(client["Customer"])
             colcount = 0
-
-            for key in client["Customer"]:
+            for key in client:
                 if (rowcount == 1):
                     self.label = tk.Label(master=self.clientList, text=key)
-                    self.label.grid(row=rowcount - 1, column=colcount)
-                self.label = tk.Label(master=self.clientList, text=client["Customer"][key])
+                    self.label.grid(row=rowcount - 1, column=colcount, ipady=10,ipadx=3, sticky="NESW")
+                self.label = tk.Label(master=self.clientList, text=client[key])
                 if(rowcount % 2):
                     self.label["background"] = "lightgrey"
-                self.label.grid(row=rowcount + 1, column=colcount, ipady=5, ipadx=10)
+                self.label.grid(row=rowcount, column=colcount, ipady=10,ipadx=3, sticky="NESW")
                 colcount += 1
+            self.button = tk.Button(master=self.clientList, text="See Invoices")
+            self.button.grid(row=rowcount, column=colcount, ipady=10,ipadx=3, sticky="NESW")
             rowcount += 1
 
+    #creating a view of the form for adding clients
     def clientAddInit(self):
         lbl_name = tk.Label(master=self.clientAdd, text="Name")
         ent_name = tk.Entry(master=self.clientAdd)
@@ -45,8 +49,7 @@ class ClientsView(tk.Frame):
         lbl_address = tk.Label(master=self.clientAdd, text="Address")
         ent_address = tk.Entry(master=self.clientAdd)
         btn_submit = tk.Button(master=self.clientAdd, text="Add Client", height=3, width=10,
-                                command=lambda: self.createClient(ent_name.get(), ent_email.get(), ent_address.get())
-                               )
+                                command=lambda: buttonAction())
         lbl_name.pack()
         ent_name.pack()
         lbl_email.pack()
@@ -55,18 +58,29 @@ class ClientsView(tk.Frame):
         ent_address.pack()
         btn_submit.pack()
 
-    def createClient(self, name, email, address):
+        def buttonAction():
+            self.createClient(ent_name.get(), ent_email.get(), ent_address.get())
 
+            ent_name.delete(0,100)
+            ent_email.delete(0,100)
+            ent_address.delete(0,100)
+
+    def seeClientInvoices(self, client_id):
+        return null
+
+    def createClient(self, name, email, address):
         clientModule.createClient( name, email, address)
-        self.clientListInit()
         self.switchMain("Client List")
 
+    #Changing between the views.
     def switchMain(self, name):
         self.clientList.pack_forget()
         self.clientAdd.pack_forget()
         if name == "Client List":
+            self.clientListInit()
             self.clientList.pack()
         elif name == "Add Client":
+            self.clientAddInit()
             self.clientAdd.pack()
 
         self.main.pack()
