@@ -1,29 +1,56 @@
-from classes import Product
+from classes import Invoice
+import pymongo
+from bson.objectid import ObjectId
 
-class ProductModule():
+
+class ProductModule:
     def __init__(self):
-        self.products = [
-            Product(1, "Product X", "Super cool.", "Category 1", 100, 10),
-            Product(2, "Product Y", "Don't use this at home.", "Category 2", 750, 10),
-            Product(3, "Product Z", "Might explode...", "Category 3", 500, 10)
-        ]
+        self.connection_string = "mongodb+srv://ultra:dundun428@ims.bnlzj.mongodb.net/inventory_MS?retryWrites=true&w" \
+                                 "=majority"
+        self.client = pymongo.MongoClient(self.connection_string)
+        self.db = self.client.inventory_MS
+        self.collection = self.db.products
 
-    #Connect database here. And make the functions update the database
+    def createProduct(self, name, description, category, cost, qty):
+        """This function creates a new product in the DB"""
+        product = {
+            "ProductName": name,
+            "Description": description,
+            "Category": category,
+            "Cost": cost,
+            "Inventory": qty
+        }
+        self.collection.insert_one(product)
 
-    def createProduct(self, id, name, description, category, cost, qty):
-        self.products.append(Product(id, name, description, category, cost, qty))
+    def getProduct(self, product_id):
+        """This function returns a product from the DB"""
+        query = {"_id": ObjectId(product_id)}
+        product = self.collection.find_one(query)
+        return product
 
-    def getProducts(self):
-        return self.products
+    def getAllProducts(self):
+        """This function returns all products in the DB"""
+        all_products = self.collection.find({})
+        return all_products
 
-    def updateProduct(self, id, name, description, category, cost, qty):
-        return null
+    def updateProduct(self, product_id, name, description, category, cost, qty):
+        """This function updates a product information in the DB"""
+        query = {"_id": ObjectId(product_id)}
+        new_values = {"$set":
+            {
+                "ProductName": name,
+                "Description": description,
+                "Category": category,
+                "Cost": cost,
+                "Inventory": qty
+            }
+        }
+        self.collection.update_one(query, new_values)
 
-    def RemoveProduct(self, id):
-        return null
-#Add product AddProduct(id, name, description, category, cost, inventory)
-#Remove product RemoveProduct(id)
-#Update Product UpdateProduct(id)
-#Get Product
+    def RemoveProduct(self, product_id):
+        """This function removes one product from the DB."""
+        query = {"_id": ObjectId(product_id)}
+        self.collection.delete_one(query)
+
 
 productModule = ProductModule()
