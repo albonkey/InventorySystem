@@ -19,7 +19,7 @@ class ClientsView(tk.Frame):
         self.clientAdd = tk.Frame(master=self.main, padx=30, pady=100)
         self.clientAddInit()
 
-        self.clientInvoicesList = tk.Frame(master=self.main, padx=30, pady=30)
+        self.clientInvoicesList = createListFrame(self.main, invoiceModule.getAllInvoices(), "See Invoices", lambda: ())
 
         self.switchMain("Client List")
 

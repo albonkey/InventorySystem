@@ -32,7 +32,7 @@ class InvoiceModule:
 
     def getPaidInvoices(self):
         """This function returns all PAID invoices from the DB"""
-        query = {"IsPaid": 0}
+        query = {"IsPaid": 1}
         invoices = self.collection.find(query)
         return invoices
 
