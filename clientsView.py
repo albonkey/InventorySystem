@@ -17,6 +17,7 @@ class ClientsView(tk.Frame):
         self.clientList = tk.Frame(master=self.main, padx=30, pady=30)
 
         self.clientAdd = tk.Frame(master=self.main, padx=30, pady=100)
+        self.clientAddInit()
 
         self.clientInvoicesList = tk.Frame(master=self.main, padx=30, pady=30)
 
@@ -80,7 +81,6 @@ class ClientsView(tk.Frame):
             self.clientListInit()
             self.clientList.pack()
         elif name == "Add Client":
-            self.clientAddInit()
             self.clientAdd.pack()
 
         self.main.pack()

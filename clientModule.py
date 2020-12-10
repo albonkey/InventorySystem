@@ -1,5 +1,6 @@
 from classes import Client
 import pymongo
+from bson.objectid import ObjectId
 import uuid
 from pymongo import MongoClient
 
@@ -12,6 +13,7 @@ class ClientModule:
         self.client = pymongo.MongoClient(self.connection_string)
         self.db = self.client.inventory_MS
         self.collection = self.db.customers
+        self.updateClient("5fd147f06c11628f7a24d78e", "Carl123", "Carl123", "Carl123")
 
 
     def get_all_clients(self):
@@ -21,7 +23,7 @@ class ClientModule:
     def createClient(self, name, email, address):
         #This functions creates a customer object in the mondoDB database using pymongo.
         # Client document to be inserted into the DB
-        client_id = uuid.uuid1()
+
         customer = {
             "CustomerName": name,
             "Email": email,
@@ -33,21 +35,19 @@ class ClientModule:
     def getClient(self, email):
         """ This function returns a customer dictionary object from the DB using their email"""
         # Client is a dictionary object
-        query = {"Customer.Email": email}
+        query = {"Email": email}
         client = self.collection.find_one(query)
         return client
 
     def updateClient(self, id, name, email, address):
         """ This function updates a customers info on the DB. """
-        query = {"Customer.CustomerID": id}
+        query = {"_id": ObjectId(id)}
         new_values = {"$set":
-                            {"Customer":
                                 {
-                                    "CustomerID": id,
                                     "CustomerName": name,
                                     "Email": email,
                                     "Address": address}
-                            }}
+                            }
         self.collection.update_one(query, new_values)
 
     def removeClient(self, client_id):
