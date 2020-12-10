@@ -36,10 +36,14 @@ class InvoiceModule:
         }
         self.collection.insert_one(invoice)
 
-    def payInvoices(self, invoice_id):
+    def payInvoice(self, invoice_id):
         """This function set the {IsPaid} attribute in the DB from a specific invoice"""
         query = {"_id": ObjectId(invoice_id)}
-        update_query = {"IsPaid": 1}
+        update_query = {"$set":
+            {
+            "IsPaid": 1
+            }
+        }
         self.collection.update_one(query, update_query)
 
     def updateInvoice(self, invoice_id, client_id, title, description, dueDate, isPaid, cost):

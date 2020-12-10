@@ -15,7 +15,7 @@ class InvoicesView(tk.Frame):
         self.sidebar = Sidebar(self, "Invoices")
         self.sidebar.pack(side="left", fill="y")
         self.main = tk.Frame(master=self)
-        self.invoicesList = createListFrame(self.main, invoiceModule.getInvoices(), "Pay Invoice", self.payInvoice )
+        self.invoicesList = createListFrame(self.main, invoiceModule.getAllInvoices(), "Pay Invoice", self.payInvoice )
 
         self.invoiceAdd = tk.Frame(master=self.main, padx=30, pady=30)
         self.invoiceAddInit()
@@ -84,6 +84,7 @@ class InvoicesView(tk.Frame):
 
     def payInvoice(self, id):
         print("Invoice Paid: " + str(id))
+        invoiceModule.payInvoice(id)
 
     def createInvoice(self, client, title, description, dueDate):
         invoiceModule.createInvoice(1, client, title, description, dueDate)
