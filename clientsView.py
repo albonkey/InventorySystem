@@ -29,7 +29,6 @@ class ClientsView(tk.Frame):
     #Creating a view of the invoices of clients
     def clientInvoiceView(self, client_id):
         client = clientModule.getClient(client_id)
-        print(client)
         self.clientView = createListFrame(self.main, client["CustomerName"], invoiceModule.getInvoices(client_id), "No Invoices", "Pay Invoice", lambda: invoiceModule.payInvoice(client_id) )
         self.switchMain("Client View")
     #creating a view of the form for adding clients

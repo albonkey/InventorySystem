@@ -103,10 +103,8 @@ class InvoicesView(tk.Frame):
         self.label.pack(padx=5, pady=5, fill="x")
 
         self.switchMain("Create Invoice")
-        print(self.products)
 
     def payInvoice(self, id):
-        print("Invoice Paid: " + str(id))
         invoiceModule.payInvoice(id)
 
     def createInvoice(self, client, title, description, dueDate, list):
