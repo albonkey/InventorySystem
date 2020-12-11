@@ -34,7 +34,8 @@ class ProductsView(tk.Frame):
         ent_inventory = tk.Entry(master=self.productAdd)
 
 
-        btn_submit = tk.Button(master=self.productAdd, text="Add Product", height=3, width=10)
+        btn_submit = tk.Button(master=self.productAdd, text="Add Product", height=3, width=10,
+            command= lambda: self.createProduct(ent_name.get(), ent_description.get(), ent_category.get(), ent_cost.get(), ent_inventory.get()))
         lbl_name.pack()
         ent_name.pack()
         lbl_description.pack()
@@ -50,9 +51,8 @@ class ProductsView(tk.Frame):
     def changeProduct(self, id):
         print("product Changed: " + str(id))
 
-    def createProduct(self, id, name, description, category, cost, qty):
-        productModule.createProduct(id, name, description, category, cost, qty)
-        self.productsListInit()
+    def createProduct(self, name, description, category, cost, qty):
+        productModule.createProduct(name, description, category, cost, qty)
         self.switchMain("Product List")
 
     def switchMain(self, name):
