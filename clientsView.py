@@ -16,7 +16,7 @@ class ClientsView(tk.Frame):
         self.sidebar.pack(side="left", fill="y")
         self.main = tk.Frame(master=self)
 
-        self.clientList = createListFrame(self.main, "Clients", clientModule.get_all_clients(),"No Clients", "See Invoices", self.seeClientInvoices)
+        self.clientList = createListFrame(self.main, "Clients", clientModule.get_all_clients(),"No Clients", "See Invoices", self.clientInvoiceView)
 
         self.clientAdd = tk.Frame(master=self.main, padx=30, pady=100)
         self.clientAddInit()
@@ -26,8 +26,12 @@ class ClientsView(tk.Frame):
 
         self.switchMain("Client List")
 
-    #Creating a view of the list of clients
-
+    #Creating a view of the invoices of clients
+    def clientInvoiceView(self, client_id):
+        client = clientModule.getClient(client_id)
+        print(client)
+        self.clientView = createListFrame(self.main, client["CustomerName"], invoiceModule.getInvoices(client_id), "No Invoices", "Pay Invoice", lambda: invoiceModule.payInvoice(client_id) )
+        self.switchMain("Client View")
     #creating a view of the form for adding clients
     def clientAddInit(self):
         lbl_name = tk.Label(master=self.clientAdd, text="Name")
@@ -53,10 +57,6 @@ class ClientsView(tk.Frame):
             ent_email.delete(0,100)
             ent_address.delete(0,100)
 
-    def seeClientInvoices(self, client_id):
-        invoices = invoiceModule.getInvoices(client_id)
-        for a in invoices:
-            print(a)
 
     def createClient(self, name, email, address):
         clientModule.createClient( name, email, address)
@@ -66,10 +66,13 @@ class ClientsView(tk.Frame):
     def switchMain(self, name):
         self.clientList.pack_forget()
         self.clientAdd.pack_forget()
+        self.clientView.pack_forget()
         if name == "Client List":
-            self.clientList = createListFrame(self.main, "Clients", clientModule.get_all_clients(),"No Clients", "See Invoices", self.seeClientInvoices)
+            self.clientList = createListFrame(self.main, "Clients", clientModule.get_all_clients(),"No Clients", "See Invoices", self.clientInvoiceView)
             self.clientList.pack()
         elif name == "Add Client":
             self.clientAdd.pack()
+        elif name == "Client View":
+            self.clientView.pack()
 
         self.main.pack()

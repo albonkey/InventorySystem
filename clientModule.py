@@ -32,10 +32,10 @@ class ClientModule:
         print("--------")
         print(_id.inserted_id)
 
-    def getClient(self, email):
+    def getClient(self, client_id):
         """ This function returns a customer dictionary object from the DB using their email"""
         # Client is a dictionary object
-        query = {"Email": email}
+        query = {"_id": ObjectId(client_id)}
         client = self.collection.find_one(query)
         return client
 
