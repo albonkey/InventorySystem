@@ -1,4 +1,3 @@
-from classes import Client
 import pymongo
 from bson.objectid import ObjectId
 import uuid
@@ -13,7 +12,6 @@ class ClientModule:
         self.client = pymongo.MongoClient(self.connection_string)
         self.db = self.client.inventory_MS
         self.collection = self.db.customers
-        self.updateClient("5fd147f06c11628f7a24d78e", "Carl123", "Carl123", "Carl123")
 
 
     def get_all_clients(self):

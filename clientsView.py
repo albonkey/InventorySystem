@@ -1,6 +1,7 @@
 import tkinter as tk
 import uuid
 from clientModule import clientModule
+from invoiceModule import invoiceModule
 from sidebar import Sidebar
 from createListFrame import createListFrame
 
@@ -15,10 +16,12 @@ class ClientsView(tk.Frame):
         self.sidebar.pack(side="left", fill="y")
         self.main = tk.Frame(master=self)
 
-        self.clientList = createListFrame(self.main, clientModule.get_all_clients(),"No Clients", "See Invoices", self.seeClientInvoices)
+        self.clientList = createListFrame(self.main, "Clients", clientModule.get_all_clients(),"No Clients", "See Invoices", self.seeClientInvoices)
 
         self.clientAdd = tk.Frame(master=self.main, padx=30, pady=100)
         self.clientAddInit()
+
+        self.clientView = tk.Frame(master=self.main)
 
 
         self.switchMain("Client List")
@@ -51,7 +54,9 @@ class ClientsView(tk.Frame):
             ent_address.delete(0,100)
 
     def seeClientInvoices(self, client_id):
-        return null
+        invoices = invoiceModule.getInvoices(client_id)
+        for a in invoices:
+            print(a)
 
     def createClient(self, name, email, address):
         clientModule.createClient( name, email, address)
@@ -62,6 +67,7 @@ class ClientsView(tk.Frame):
         self.clientList.pack_forget()
         self.clientAdd.pack_forget()
         if name == "Client List":
+            self.clientList = createListFrame(self.main, "Clients", clientModule.get_all_clients(),"No Clients", "See Invoices", self.seeClientInvoices)
             self.clientList.pack()
         elif name == "Add Client":
             self.clientAdd.pack()

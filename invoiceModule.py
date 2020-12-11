@@ -1,8 +1,7 @@
-from classes import Invoice
+
 import pymongo
 from bson.objectid import ObjectId
-from classes import Product
-
+from productModule import productModule
 
 class InvoiceModule:
     def __init__(self):
@@ -13,6 +12,7 @@ class InvoiceModule:
         self.collection = self.db.invoice
         self.collection_invoice_product = self.db.invoice_product
 
+        """
         self.createInvoice("5fd147a2b278696ba898e9a8", "Title", "Description", "20.Des", 50, [{
             "ProductName": "Product X",
             "Description": "Coool",
@@ -31,7 +31,7 @@ class InvoiceModule:
             "Category": "Toy",
             "Cost": 60
         }])
-
+        """
     # id_counter:
     def getAllInvoices(self):
         """This function returns all invoices in the DB"""
@@ -40,7 +40,7 @@ class InvoiceModule:
 
     def getInvoices(self, client_id):
         """This function returns invoices pertaining to a client"""
-        query = {"_id": ObjectId(client_id)}
+        query = {"ClientID": ObjectId(client_id)}
         invoice = self.collection.find(query)
         return invoice
 
@@ -68,20 +68,21 @@ class InvoiceModule:
         }
         _id = self.collection.insert_one(invoice)
         self.addProductInvoice(_id.inserted_id, list)
+        print("Invoice created")
 
     def addProductInvoice(self, invoice_id, productList):
-
         for product in productList:
-            product = {
+            _product = productModule.getProduct(product)
+            productModel = {
                 "InvoiceID": invoice_id,
-                "ProductName": product["ProductName"],
-                "Description": product["Description"],
-                "Category": product["Category"],
-                "Cost": product["Cost"],  # default IsPaid to be not paid (0)
-                "Quantity": 1
+                "ProductName": _product["ProductName"],
+                "Description": _product["Description"],
+                "Category": _product["Category"],
+                "Cost": _product["Cost"],  # default IsPaid to be not paid (0)
+                "Quantity": productList[product]
             }
-            self.collection_invoice_product.insert_one(product)
-
+            self.collection_invoice_product.insert_one(productModel)
+        print("Products added")
 
     def payInvoice(self, invoice_id):
         """This function set the {IsPaid} attribute in the DB from a specific invoice"""
@@ -112,6 +113,5 @@ class InvoiceModule:
         """ This function removes one invoice from the DB. """
         query = {"_id": ObjectId(invoice_id)}
         self.collection.delete_one(query)
-
 
 invoiceModule = InvoiceModule()

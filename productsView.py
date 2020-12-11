@@ -14,7 +14,7 @@ class ProductsView(tk.Frame):
         self.sidebar = Sidebar(self, "Products")
         self.sidebar.pack(side="left", fill="y")
         self.main = tk.Frame(master=self)
-        self.productsList = createListFrame(self.main, productModule.getAllProducts(),"No Products", "Change Product", self.changeProduct )
+        self.productsList = createListFrame(self.main, "Products", productModule.getAllProducts(),"No Products", "Change Product", self.changeProduct )
 
         self.productAdd = tk.Frame(master=self.main, padx=30, pady=100)
         self.productAddInit()
@@ -59,6 +59,7 @@ class ProductsView(tk.Frame):
         self.productsList.pack_forget()
         self.productAdd.pack_forget()
         if(name == "Product List"):
+            self.productsList = createListFrame(self.main, "Products", productModule.getAllProducts(),"No Products", "Change Product", self.changeProduct )
             self.productsList.pack()
         elif(name == "Add Product"):
             self.productAdd.pack()

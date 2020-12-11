@@ -20,7 +20,7 @@ class InvoicesView(tk.Frame):
 
         self.invoiceAdd = tk.Frame(master=self.main, padx=30, pady=30)
         self.invoiceAddInit()
-        self.products = []
+        self.products = {}
         self.productList = tk.Frame(master=self.main, padx=30, pady=30)
         self.invoiceProductList()
         self.switchMain("Current Invoices")
@@ -28,18 +28,19 @@ class InvoicesView(tk.Frame):
     #Creating a view of the list of invoices
     def updateList(self, type):
         if(type == "paid"):
-            self.invoicesList = createListFrame(self.main, invoiceModule.getPaidInvoices(),"Currently no paid invoices.", "Delete Invoice", self.payInvoice )
+            self.invoicesList = createListFrame(self.main, "Invoice History", invoiceModule.getPaidInvoices(),"Currently no paid invoices.", "Delete Invoice", self.payInvoice )
         elif(type == "unpaid"):
-            self.invoicesList = createListFrame(self.main, invoiceModule.getUnpaidInvoices(), "Currently no unpaid invoices.", "Pay Invoice", self.payInvoice )
+            self.invoicesList = createListFrame(self.main, "Unpaid Invoices", invoiceModule.getUnpaidInvoices(), "Currently no unpaid invoices.", "Pay Invoice", self.payInvoice )
     #creating a view of the form for creating invoices
     def invoiceAddInit(self):
-        dropdownClients = []
+        dropdownClients = {}
+        dropdownClients[""] = "" # Blank space for dropdownmenu
         for client in clientModule.get_all_clients():
-            dropdownClients.append(client["CustomerName"])
+            dropdownClients[client["_id"]] = client["CustomerName"]
 
         tkvar_client = tk.StringVar(master=self.invoiceAdd)
         lbl_client = tk.Label(master=self.invoiceAdd, text="Client")
-        opt_client = ttk.OptionMenu(self.invoiceAdd, tkvar_client, dropdownClients[1], *dropdownClients)
+        opt_client = ttk.OptionMenu(self.invoiceAdd, tkvar_client,  *dropdownClients.values())
         opt_client["width"] = 18
 
         lbl_title = tk.Label(master=self.invoiceAdd, text="Title")
@@ -49,7 +50,7 @@ class InvoicesView(tk.Frame):
         lbl_dueDate = tk.Label(master=self.invoiceAdd, text="Due Date")
         ent_dueDate = tk.Entry(master=self.invoiceAdd)
         btn_submit = tk.Button(master=self.invoiceAdd, text="Create Invoice", height=3, width=10,
-            command= lambda: self.createInvoice(tkvar_client.get(), ent_title.get(), ent_description.get(), ent_dueDate.get())
+            command= lambda: self.createInvoice(get_id(tkvar_client.get()), ent_title.get(), ent_description.get(), ent_dueDate.get(), self.products)
         )
 
         lbl_client.pack(padx=5, pady=5, fill="x")
@@ -62,39 +63,58 @@ class InvoicesView(tk.Frame):
         ent_dueDate.pack(padx=5, pady=5, fill="x")
         btn_submit.pack(padx=5, pady=5, fill="x")
 
+        def get_id(*args):  # on select function
+            for i,j in dropdownClients.items():
+                if j==tkvar_client.get():
+                    return i
+
+
+
     #Creating view for adding products to the invoice
     def invoiceProductList(self):
-        dropdownProducts = []
+        dropdownProducts = {}
+        dropdownProducts[""] = "" # Blank space for dropdownmenu
         for product in productModule.getAllProducts():
-            dropdownProducts.append(product["ProductName"])
+            dropdownProducts[product["_id"]] = product["ProductName"]
+
         lbl_products = tk.Label(master=self.productList, text="Products")
         tkvar_product = tk.StringVar(master=self.productList)
-        opt_products = ttk.OptionMenu(self.productList, tkvar_product, dropdownProducts[-1], *dropdownProducts)
+        opt_products = ttk.OptionMenu(self.productList, tkvar_product, *dropdownProducts.values())
         opt_products["width"] = 18
 
-        btn_addProduct = tk.Button(master=self.productList, text="Add Product",padx=5, pady=3, command= lambda: self.addProduct(tkvar_product.get()))
+        btn_addProduct = tk.Button(master=self.productList, text="Add Product",padx=5, pady=3, command= lambda: self.addProduct(get_id(tkvar_product.get()),tkvar_product.get()))
 
         lbl_products.pack(padx=5, pady=5, fill="x")
         opt_products.pack(padx=5, pady=5, fill="x")
         btn_addProduct.pack(padx=5, pady=5, fill="x")
 
+        def get_id(*args):  # on select function
+            for i,j in dropdownProducts.items():
+                if j==tkvar_product.get():
+                    return i
 
 
-    def addProduct(self, product):
-        self.products.append(product)
+    def addProduct(self, productID, product):
+        if productID in self.products:
+            self.products[productID] += 1
+        else:
+            self.products[productID] = 1
         self.label = tk.Label(master=self.productList, text=product)
         self.label.pack(padx=5, pady=5, fill="x")
 
         self.switchMain("Create Invoice")
+        print(self.products)
 
     def payInvoice(self, id):
         print("Invoice Paid: " + str(id))
         invoiceModule.payInvoice(id)
 
     def createInvoice(self, client, title, description, dueDate, list):
-        invoiceModule.createInvoice(1, client, title, description, dueDate, list)
+        cost = 0
+        for product in self.products:
+            cost += productModule.getProduct(product)["Cost"]
+        invoiceModule.createInvoice( client, title, description, dueDate, cost, list)
 
-        self.invoicesListInit()
         self.switchMain("Invoice List")
 
 
