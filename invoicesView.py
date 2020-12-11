@@ -28,9 +28,9 @@ class InvoicesView(tk.Frame):
     #Creating a view of the list of invoices
     def updateList(self, type):
         if(type == "paid"):
-            self.invoicesList = createListFrame(self.main, "Invoice History", invoiceModule.getPaidInvoices(),"Currently no paid invoices.", "Delete Invoice", self.payInvoice )
+            self.invoicesList = createListFrame(self.main, "Invoice History", invoiceModule.getPaidInvoices(),"Currently no paid invoices.", "Delete Invoice", self.payInvoice, ["ClientID"] )
         elif(type == "unpaid"):
-            self.invoicesList = createListFrame(self.main, "Unpaid Invoices", invoiceModule.getUnpaidInvoices(), "Currently no unpaid invoices.", "Pay Invoice", self.payInvoice )
+            self.invoicesList = createListFrame(self.main, "Unpaid Invoices", invoiceModule.getUnpaidInvoices(), "Currently no unpaid invoices.", "Pay Invoice", self.payInvoice, ["ClientID"] )
     #creating a view of the form for creating invoices
     def invoiceAddInit(self):
         dropdownClients = {}

@@ -10,43 +10,13 @@ class InvoiceModule:
         self.client = pymongo.MongoClient(self.connection_string)
         self.db = self.client.inventory_MS
         self.collection = self.db.invoice
-        self.collection_clients = self.db.clients
         self.collection_invoice_product = self.db.invoice_product
 
-        """
-        self.createInvoice("5fd147a2b278696ba898e9a8", "Title", "Description", "20.Des", 50, [{
-            "ProductName": "Product X",
-            "Description": "Coool",
-            "Category": "Toy",
-            "Cost": 50
-        },
-        {
-            "ProductName": "Product Y",
-            "Description": "Coool",
-            "Category": "Toy",
-            "Cost": 70
-        },
-        {
-            "ProductName": "Product Z",
-            "Description": "Coool",
-            "Category": "Toy",
-            "Cost": 60
-        }])
-        """
+        
     # id_counter:
     def getAllInvoices(self):
         """This function returns all invoices in the DB"""
-        all_invoices = self.collection.aggregate([
-                {
-                    "$lookup":
-                    {
-                        "from": "collection_invoices",
-                        "localField": "client_id",
-                        "foreignField": "_id",
-                        "as": "collection"
-                    }
-                }
-            ])
+        all_invoices = self.collection.find({})
         return all_invoices
 
     def getInvoices(self, client_id):

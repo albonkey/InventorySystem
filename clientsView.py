@@ -16,7 +16,7 @@ class ClientsView(tk.Frame):
         self.sidebar.pack(side="left", fill="y")
         self.main = tk.Frame(master=self)
 
-        self.clientList = createListFrame(self.main, "Clients", clientModule.get_all_clients(),"No Clients", "See Invoices", self.clientInvoiceView)
+        self.clientList = createListFrame(self.main, "Clients", clientModule.get_all_clients(),"No Clients", "See Invoices", self.clientInvoiceView, [""])
 
         self.clientAdd = tk.Frame(master=self.main, padx=30, pady=100)
         self.clientAddInit()
@@ -67,7 +67,7 @@ class ClientsView(tk.Frame):
         self.clientAdd.pack_forget()
         self.clientView.pack_forget()
         if name == "Client List":
-            self.clientList = createListFrame(self.main, "Clients", clientModule.get_all_clients(),"No Clients", "See Invoices", self.clientInvoiceView)
+            self.clientList = createListFrame(self.main, "Clients", clientModule.get_all_clients(),"No Clients", "See Invoices", self.clientInvoiceView, [""])
             self.clientList.pack()
         elif name == "Add Client":
             self.clientAdd.pack()
