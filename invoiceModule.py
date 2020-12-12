@@ -2,6 +2,7 @@
 import pymongo
 from bson.objectid import ObjectId
 from productModule import productModule
+from clientModule import clientModule
 
 class InvoiceModule:
     def __init__(self):
@@ -12,7 +13,7 @@ class InvoiceModule:
         self.collection = self.db.invoice
         self.collection_invoice_product = self.db.invoice_product
 
-        
+
     # id_counter:
     def getAllInvoices(self):
         """This function returns all invoices in the DB"""
@@ -39,9 +40,11 @@ class InvoiceModule:
 
     def createInvoice(self, client_id, title, description, dueDate, cost, list):
         """This function creates a new invoices object """
+        client = clientModule.getClient(client_id)
         invoice = {
             "Title": title,
             "ClientID": client_id,
+            "ClientName":client["CustomerName"],
             "InvoiceDescription": description,
             "DueDate": dueDate,
             "IsPaid": 0,  # default IsPaid to be not paid (0)

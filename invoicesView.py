@@ -110,7 +110,7 @@ class InvoicesView(tk.Frame):
     def createInvoice(self, client, title, description, dueDate, list):
         cost = 0
         for product in self.products:
-            cost += productModule.getProduct(product)["Cost"]
+            cost += int(productModule.getProduct(product)["Cost"])
         invoiceModule.createInvoice( client, title, description, dueDate, cost, list)
 
         self.switchMain("Invoice List")
